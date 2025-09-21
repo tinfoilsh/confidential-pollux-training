@@ -36,7 +36,7 @@ containers:
       "-e", "POLLUX_LN_DATA_DIR=/mnt/gcs/lineage-nodes",
       "-e", "POLLUX_LN_INDEX_DIR=/mnt/gcs/lineage-nodes/index",
       "us-central1-docker.pkg.dev/workshop-labs-pbc/pollux-docker/ml-training:latest",
-      "-lc", "install -m600 /mnt/gcs/secrets/hf-token /data/hf/token && exec python -m scripts.training_server"
+      "-lc", "mkdir -p /data/hf && if [ -f /mnt/gcs/secrets/hf-token ]; then install -m600 /mnt/gcs/secrets/hf-token /data/hf/token; fi; exec python -m scripts.training_server"
     ]
 
 shim:
