@@ -1,0 +1,52 @@
+shim-version: v0.1.9@sha256:410510c9e8e4c7489dd201fede302dee8455075ca28f4f0abbf84bded943b8f1
+cvm-version: 0.5.6
+cpus: 32
+memory: 49152
+vllm: false
+
+containers:
+  # gcsfuse sidecar (read/write)
+  - name: "gcsfuse"
+    image: ""
+    args: [
+      "--cap-add", "SYS_ADMIN",
+      "--device", "/dev/fuse",
+      "--security-opt", "apparmor=unconfined",
+      "-v", "/mnt/ramdisk/gcs-bucket:/gcs:rshared",
+      "-v", "/mnt/ramdisk/gcloud_key.json:/key.json:ro",
+      "-e", "BUCKET_NAME=pollux-tinfoil",
+      "kapetacom/gcsfuse-ubuntu:v3.2.0"
+    ]
+
+  # Pollux training (RW over /gcs via gcsfuse)
+  - name: "ml-training"
+    image: ""
+    args: [
+      "--runtime", "nvidia",
+      "--gpus", "all",
+      "--ipc", "host",
+      "--entrypoint", "python",
+      "-v", "/mnt/ramdisk/gcs-bucket:/mnt/gcs",
+      "-v", "/mnt/ramdisk/gcloud_key.json:/key.json:ro",
+      "-e", "GOOGLE_APPLICATION_CREDENTIALS=/key.json",
+      "-e", "GCS_BUCKET=pollux-tinfoil",
+      "-e", "GCS_ACCESS=read-write",
+      "-e", "POLLUX_LN_GCS_BUCKET=gs://pollux-tinfoil",
+      "-e", "POLLUX_GCSFUSE_MOUNT_PATH=/mnt/gcs",
+      "-e", "POLLUX_LN_DATA_DIR=/mnt/gcs/lineage-nodes",
+      "-e", "POLLUX_LN_INDEX_DIR=/mnt/gcs/lineage-nodes/index",
+      "us-central1-docker.pkg.dev/workshop-labs-pbc/pollux-docker/ml-training:latest",
+      "-m", "scripts.training_server"
+    ]
+
+shim:
+  listen-port: 443
+  upstream-port: 8000
+  publish-attestation: false
+  tls-challenge: dns
+  paths:
+    - /metrics
+    - /ping
+    - /upload
+    - /status
+    - /train
