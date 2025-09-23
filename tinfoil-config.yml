@@ -33,8 +33,6 @@ containers:
       "-e", "GCS_ACCESS=read-write",
       "-e", "POLLUX_LN_GCS_BUCKET=gs://pollux-tinfoil",
       "-e", "POLLUX_GCSFUSE_MOUNT_PATH=/mnt/gcs",
-      "-e", "POLLUX_LN_DATA_DIR=/mnt/gcs/lineage-nodes",
-      "-e", "POLLUX_LN_INDEX_DIR=/mnt/gcs/lineage-nodes/index",
       "-e", "HF_TOKEN=$(awk -F': *' '$1~/^hf-token$/{print $2; exit}' /mnt/ramdisk/external-config.yml)",
       "us-central1-docker.pkg.dev/workshop-labs-pbc/pollux-docker/ml-training:latest",
       "-m", "scripts.training_server"
