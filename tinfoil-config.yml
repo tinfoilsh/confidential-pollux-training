@@ -25,7 +25,7 @@ containers:
       "--runtime", "nvidia",
       "--gpus", "all",
       "--ipc", "host",
-      "--entrypoint", "/bin/sh",
+      "--entrypoint", "python",
       "-v", "/mnt/ramdisk/gcs-bucket:/mnt/gcs",
       "-v", "/mnt/ramdisk/gcloud_key.json:/key.json:ro",
       "-e", "GOOGLE_APPLICATION_CREDENTIALS=/key.json",
@@ -35,8 +35,9 @@ containers:
       "-e", "POLLUX_GCSFUSE_MOUNT_PATH=/mnt/gcs",
       "-e", "POLLUX_LN_DATA_DIR=/mnt/gcs/lineage-nodes",
       "-e", "POLLUX_LN_INDEX_DIR=/mnt/gcs/lineage-nodes/index",
+      "-e", "HF_TOKEN=$(awk -F': *' '$1~/^hf-token$/{print $2; exit}' /tinfoil/external-config.yml)",
       "us-central1-docker.pkg.dev/workshop-labs-pbc/pollux-docker/ml-training:latest",
-      "-lc", "install -d -m700 /data/hf && if [ -f /mnt/gcs/secrets/hf-token ]; then install -m600 /mnt/gcs/secrets/hf-token /data/hf/token; fi; cd /pollux && exec python -m scripts.training_server"
+      "-m", "scripts.training_server"
     ]
 
 shim:
