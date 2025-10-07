@@ -1,7 +1,7 @@
 shim-version: v0.2.5@sha256:ffdc7ca8e1a974c318533262c072b2c6c0871431b1e951fde7692388b5854cc3
 cvm-version: 0.5.6
 cpus: 32
-memory: 49152
+memory: 524288
 vllm: false
 
 containers:
