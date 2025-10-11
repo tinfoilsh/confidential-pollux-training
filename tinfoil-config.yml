@@ -45,8 +45,15 @@ shim:
   publish-attestation: false
   tls-challenge: dns
   paths:
-    - /metrics
     - /ping
-    - /upload
     - /status
     - /train
+    - /upload/start
+    - /upload/batch
+    - /upload/finalize
+    - /cancel_task
+    - /queue_status
+    - /list_task_ids
+    - /lock_state
+    - /clear_queue
+    - /list_models
