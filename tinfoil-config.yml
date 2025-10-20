@@ -35,7 +35,7 @@ containers:
       "-e", "POLLUX_GCSFUSE_MOUNT_PATH=/mnt/gcs",
       "-e", "HF_TOKEN=$(awk -F': *' '$1~/^hf-token$/{print $2; exit}' /mnt/ramdisk/external-config.yml)",
       "-e", "TINFOIL_API_KEY=$(awk -F': *' '$1~/^tinfoil-api-key$/{print $2; exit}' /mnt/ramdisk/external-config.yml)",
-      "us-central1-docker.pkg.dev/workshop-labs-pbc/pollux-docker/ml-training:2310898",
+      "us-central1-docker.pkg.dev/workshop-labs-pbc/pollux-docker/ml-training:e81ade9",
       "-m", "scripts.training_server"
     ]
 
