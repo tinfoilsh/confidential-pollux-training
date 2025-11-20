@@ -1,7 +1,8 @@
-shim-version: v0.2.6@sha256:db5221f8e0c92562ddbe7d708a374ee0ca393bddc49e3ab2add5e23d8052b843
-cvm-version: 0.5.6
-cpus: 32
-memory: 524288
+shim-version: v0.2.10@sha256:f9040a48106ab06c290fd9b225d4dd53a2daad715c9107594d4310b21592039f
+cvm-version: 0.5.7
+cpus: 16
+memory: 262144
+gpus: full
 vllm: false
 
 containers:
@@ -35,7 +36,7 @@ containers:
       "-e", "POLLUX_GCSFUSE_MOUNT_PATH=/mnt/gcs",
       "-e", "HF_TOKEN=$(awk -F': *' '$1~/^hf-token$/{print $2; exit}' /mnt/ramdisk/external-config.yml)",
       "-e", "TINFOIL_API_KEY=$(awk -F': *' '$1~/^tinfoil-api-key$/{print $2; exit}' /mnt/ramdisk/external-config.yml)",
-      "us-central1-docker.pkg.dev/workshop-labs-pbc/pollux-docker/ml-training:e81ade9",
+      "us-central1-docker.pkg.dev/workshop-labs-pbc/pollux-docker/ml-training:afd8afc",
       "-m", "scripts.training_server"
     ]
 
