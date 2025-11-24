@@ -1,4 +1,4 @@
-shim-version: v0.2.10@sha256:f9040a48106ab06c290fd9b225d4dd53a2daad715c9107594d4310b21592039f
+shim-version: v0.2.11@sha256:cbbbeeac855948610cd1ba5b406d10ffa13331cbbe7d25964ba3c90486f65810
 cvm-version: 0.5.7
 cpus: 16
 memory: 262144
@@ -15,7 +15,7 @@ containers:
       "--security-opt", "apparmor=unconfined",
       "-v", "/mnt/ramdisk/gcs-bucket:/gcs:rshared",
       "-v", "/mnt/ramdisk/gcloud_key.json:/key.json:ro",
-      "-e", "BUCKET_NAME=pollux-tinfoil",
+      "-e", "BUCKET_NAME=pollux-enc-prod",
       "kapetacom/gcsfuse-ubuntu:v3.2.0"
     ]
 
@@ -30,13 +30,13 @@ containers:
       "-v", "/mnt/ramdisk/gcs-bucket:/mnt/gcs",
       "-v", "/mnt/ramdisk/gcloud_key.json:/key.json:ro",
       "-e", "GOOGLE_APPLICATION_CREDENTIALS=/key.json",
-      "-e", "GCS_BUCKET=pollux-tinfoil",
+      "-e", "GCS_BUCKET=pollux-enc-prod",
       "-e", "GCS_ACCESS=read-write",
-      "-e", "POLLUX_LN_GCS_BUCKET=gs://pollux-tinfoil",
+      "-e", "POLLUX_LN_GCS_BUCKET=gs://pollux-enc-prod",
       "-e", "POLLUX_GCSFUSE_MOUNT_PATH=/mnt/gcs",
       "-e", "HF_TOKEN=$(awk -F': *' '$1~/^hf-token$/{print $2; exit}' /mnt/ramdisk/external-config.yml)",
       "-e", "TINFOIL_API_KEY=$(awk -F': *' '$1~/^tinfoil-api-key$/{print $2; exit}' /mnt/ramdisk/external-config.yml)",
-      "us-central1-docker.pkg.dev/workshop-labs-pbc/pollux-docker/ml-training:afd8afc",
+      "us-central1-docker.pkg.dev/workshop-labs-pbc/pollux-docker/ml-training@sha256:95c942a3769c0b994ae8f1e266ced5fcee64f2799ca27f18b2555724ce019f2c",
       "-m", "scripts.training_server"
     ]
 
