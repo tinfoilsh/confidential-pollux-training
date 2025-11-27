@@ -33,6 +33,7 @@ containers:
       "-e", "GCS_ACCESS=read-write",
       "-e", "POLLUX_LN_GCS_BUCKET=gs://pollux-enc-prod",
       "-e", "POLLUX_GCSFUSE_MOUNT_PATH=/mnt/gcs",
+      "-e", "KEY_MODE=real_keys",
       "-e", "WANDB_API_KEY=$(awk -F': *' '$1~/^wandb-api-key$/{print $2; exit}' /mnt/ramdisk/external-config.yml)",
       "-e", "WANDB_ENTITY=$(awk -F': *' '$1~/^wandb-entity$/{print $2; exit}' /mnt/ramdisk/external-config.yml)",
       "-e", "WANDB_PROJECT=$(awk -F': *' '$1~/^wandb-project$/{print $2; exit}' /mnt/ramdisk/external-config.yml)",
