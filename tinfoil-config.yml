@@ -1,9 +1,8 @@
-shim-version: v0.2.11@sha256:cbbbeeac855948610cd1ba5b406d10ffa13331cbbe7d25964ba3c90486f65810
-cvm-version: 0.5.7
+shim-version: v0.2.14@sha256:24d59ce41ad00a05ab5a37708b0d8b07a7d09abb1b74b75ee4862f688d093949
+cvm-version: 0.5.8
 cpus: 16
 memory: 262144
 gpus: full
-vllm: false
 
 containers:
   # gcsfuse sidecar (read/write)
@@ -34,16 +33,19 @@ containers:
       "-e", "GCS_ACCESS=read-write",
       "-e", "POLLUX_LN_GCS_BUCKET=gs://pollux-enc-prod",
       "-e", "POLLUX_GCSFUSE_MOUNT_PATH=/mnt/gcs",
+      "-e", "WANDB_API_KEY=$(awk -F': *' '$1~/^wandb-api-key$/{print $2; exit}' /mnt/ramdisk/external-config.yml)",
+      "-e", "WANDB_ENTITY=$(awk -F': *' '$1~/^wandb-entity$/{print $2; exit}' /mnt/ramdisk/external-config.yml)",
+      "-e", "WANDB_PROJECT=$(awk -F': *' '$1~/^wandb-project$/{print $2; exit}' /mnt/ramdisk/external-config.yml)",
       "-e", "HF_TOKEN=$(awk -F': *' '$1~/^hf-token$/{print $2; exit}' /mnt/ramdisk/external-config.yml)",
       "-e", "TINFOIL_API_KEY=$(awk -F': *' '$1~/^tinfoil-api-key$/{print $2; exit}' /mnt/ramdisk/external-config.yml)",
-      "us-central1-docker.pkg.dev/workshop-labs-pbc/pollux-docker/ml-training@sha256:95c942a3769c0b994ae8f1e266ced5fcee64f2799ca27f18b2555724ce019f2c",
+      "us-central1-docker.pkg.dev/workshop-labs-pbc/pollux-docker/ml-training@sha256:8d7531a4a1f5ac270a07c797bb466c72175fefbb9ba2dfc5d6cb2eba9b30b0db",
       "-m", "scripts.training_server"
     ]
 
 shim:
   listen-port: 443
   upstream-port: 8000
-  publish-attestation: false
+  publish-attestation: true
   tls-challenge: dns
   paths:
     - /ping
