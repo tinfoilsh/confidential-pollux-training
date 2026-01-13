@@ -1,5 +1,5 @@
-shim-version: v0.2.15@sha256:5ca748b384b78b7e686b57ca66d9b3c552038ebab2ce60305004f76e573a8458
-cvm-version: 0.5.9
+shim-version: v0.3.5@sha256:f44c65a1f7db476be20c3431bb6facea8c2966606a07fbb5724a619f82bfa558
+cvm-version: 0.5.15
 cpus: 16
 memory: 262144
 gpus: full
@@ -46,8 +46,6 @@ containers:
 shim:
   listen-port: 443
   upstream-port: 8000
-  publish-attestation: true
-  tls-challenge: dns
   paths:
     - /ping
     - /status
