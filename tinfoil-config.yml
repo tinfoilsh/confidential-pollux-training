@@ -36,7 +36,7 @@ containers:
       "-e", "KEY_MODE=real_keys",
       "-e", "HF_TOKEN=$(sed -n 's/^HF_TOKEN: *//p' /mnt/ramdisk/external-config.yml)",
       "-e", "TINFOIL_API_KEY=$(sed -n 's/^TINFOIL_API_KEY: *//p' /mnt/ramdisk/external-config.yml)",
-      "us-central1-docker.pkg.dev/workshop-labs-pbc/pollux-docker/ml-training@sha256:7910b285f0cf0664a542bfde2e7520c838b9e38cc62509c48ffd6826071e9dd7",
+      "us-central1-docker.pkg.dev/workshop-labs-pbc/pollux-docker/ml-training@sha256:4b52b875a7f32dfee072dbb569081ceae28f70dcab664be5857852d24ce1e8a1",
       "-m", "scripts.training_server"
     ]
 
