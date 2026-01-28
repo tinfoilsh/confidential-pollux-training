@@ -58,4 +58,4 @@ shim:
     - /lock_state
     - /clear_queue
     - /list_models
-    - /v1/user/{user_id}
+    - /v1/user/*
